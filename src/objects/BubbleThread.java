@@ -76,7 +76,6 @@ public class BubbleThread implements Runnable {
 
 
 	//normal methods
-
 	public void bubbleSort() {
 		if(this.parameter.compareTo("Total Population") == 0 || this.parameter.compareTo("TotalPop") == 0 ) {
 			bubbleSortByTotalPopulation(list);
@@ -183,6 +182,9 @@ public class BubbleThread implements Runnable {
 
 		bubbleSort(); //Thread sorts its lists.
 		result = list;
+		
+		
+		System.out.println("Ending Thread: " + ThreadName);
 	}
 	
 	public void Start(String parameter) {

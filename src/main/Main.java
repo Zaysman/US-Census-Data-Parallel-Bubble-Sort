@@ -24,6 +24,8 @@ public class Main {
 	static int numberOfThreads; //Determines how many threads there are
 	static int threadnum = 0; //This controls which thread an element from entries will be sent to for sorting
 	static String sortingParam;
+	
+	static long startTime, endTime;
 
 
 	public static void main(String[] args) throws InterruptedException {
@@ -56,6 +58,11 @@ public class Main {
 		Scanner input = new Scanner(System.in);
 		sortingParam = input.next();
 		input.close();
+		
+		//Once we have user Input, Start the timer.
+		startTime = System.currentTimeMillis();
+		
+		
 
 		//Here, we assign the elements of entries from the excel sheet and to a thread.
 		int entriesIterator = 0;
@@ -76,17 +83,27 @@ public class Main {
 			threads[i].setResultsList(results);
 			threads[i].Start(sortingParam);
 		}
+		
+		//After the threads run, we want continuously check to see if they're null so we can continue with the program as fast as possible.
+		
 
-		TimeUnit.SECONDS.sleep(3); //program sleeps for a few seconds after starting threads to give them time to run.
+		TimeUnit.SECONDS.sleep(1); //program sleeps for a few seconds after starting threads to give them time to run.
 		merge();
 
+		//Once the merging is complete, we get the system time again to calculate the total time of the sort.  
+		endTime = System.currentTimeMillis();
+		
 		System.out.println("sortedEntries has " + sortedEntries.size() + " elements");
 		
 		//write to file
 		writeFile();
 		
 		
+		System.out.println("The Program runtime parallel bubble sort is: " + ((endTime - startTime)) + " milliseconds");
+		
 	}
+	
+	
 
 	public static void merge() {
 		if(sortingParam.compareTo("TotalPop") == 0) {
